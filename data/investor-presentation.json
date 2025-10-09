@@ -1,0 +1,299 @@
+{
+  "company": {
+    "name": "Windscreen Compare",
+    "tagline": "Rebuilding the vehicle glass industry through AI, automation, and connected data",
+    "description": "The UK's first AI-powered glass ecosystem — linking customers, technicians, suppliers, garages, fleets, and insurers in real time",
+    "vision": "Connecting every pane of glass — through data"
+  },
+  "funding": {
+    "round": "SEIS",
+    "amount": "£350,000",
+    "preMoneyValuation": "£2,000,000",
+    "equityOffered": "25%",
+    "useOfFunds": {
+      "techDevelopment": 40,
+      "marketingGrowth": 25,
+      "apiDataInfrastructure": 20,
+      "keyHires": 15
+    }
+  },
+  "market": {
+    "size": "£1.5B",
+    "country": "UK",
+    "annualReplacements": "4M+",
+    "averageJobValue": "£250–£800",
+    "digitalPenetration": "<5%",
+    "insurerFleetOrigin": ">40%"
+  },
+  "problemStatement": {
+    "headline": "An outdated industry still running on phone calls and guesswork",
+    "painPoints": [
+      {
+        "stakeholder": "Customers",
+        "issue": "Wait days for quotes and don't know if they're fair"
+      },
+      {
+        "stakeholder": "Technicians",
+        "issue": "Waste time chasing parts, stock, and supplier confirmations"
+      },
+      {
+        "stakeholder": "Glass Suppliers",
+        "issue": "Rely on manual orders and disconnected systems"
+      },
+      {
+        "stakeholder": "Insurers",
+        "issue": "Deal with fragmented claims and inconsistent ADAS compliance"
+      }
+    ]
+  },
+  "solution": {
+    "headline": "A single API powering the entire glass supply chain",
+    "tagline": "From quote to calibration, every interaction runs through our intelligent core",
+    "ecosystem": ["Quote Portal (Customer)", "Technician App", "Supplier Console", "Trade Garage Hub", "CRM Dashboard"]
+  },
+  "features": [
+    {
+      "name": "Clear Price AI",
+      "tagline": "Instant, transparent quotes with ADAS checks",
+      "description": "AI calculates total cost based on labour, material, distance, and calibration need"
+    },
+    {
+      "name": "Technician Match AI",
+      "tagline": "Right tech, right job, right time",
+      "description": "Automatically allocates nearest qualified technician using Maps and schedule data"
+    },
+    {
+      "name": "Supplier API Network",
+      "tagline": "Live stock and pricing from major glass suppliers",
+      "description": "APIs or CSV feeds sync inventory from suppliers like Pugh's and Pilkington"
+    },
+    {
+      "name": "Trade Garage Hub",
+      "tagline": "BNPL, stock visibility, and job management",
+      "description": "Garages access live pricing, order directly, and spread payments via Klarna/Stripe"
+    },
+    {
+      "name": "Tony AI Assistant",
+      "tagline": "An intelligent co-pilot for technicians",
+      "description": "Provides instant quoting, route optimisation, training, and voice support"
+    }
+  ],
+  "technology": {
+    "headline": "Our competitive edge: data that learns from every job",
+    "stack": [
+      {
+        "layer": "AI Layer",
+        "components": ["Tony AI", "Image Detection AI", "AI Task Agent"]
+      },
+      {
+        "layer": "Data Layer",
+        "components": ["VRN → ARGIC Decoder", "Dynamic Calculator"]
+      },
+      {
+        "layer": "Integration Layer",
+        "components": ["Stripe", "Twilio", "Google Maps", "UK Vehicle Data", "Insurer APIs"]
+      },
+      {
+        "layer": "Database Layer",
+        "components": ["Supabase", "Airtable (GDPR-compliant)"]
+      }
+    ],
+    "moat": "Every quote, photo, and calibration feeds our algorithm — improving pricing accuracy, part matching, and technician allocation automatically"
+  },
+  "insuranceFleetIntegration": {
+    "headline": "The bridge between insurers, fleets, and glass providers",
+    "benefits": [
+      "Insurer APIs auto-validate claims and confirm coverage",
+      "Fleet dashboards schedule recurring maintenance",
+      "Direct payment and claim routing reduce admin costs",
+      "ADAS calibration compliance logged in CRM"
+    ],
+    "valueProposition": [
+      "Guarantees job volume",
+      "Increases trust with major suppliers",
+      "Creates stickiness with national technician partners"
+    ]
+  },
+  "automation": {
+    "headline": "The operations command centre",
+    "modules": [
+      "Job Scheduler",
+      "AI Task Agent (Plan → Act → Report)",
+      "Accounting / Reconciliation",
+      "Technician Reviews",
+      "Compliance Logs"
+    ],
+    "benefit": "Our AI automates admin — from supplier orders to customer updates — so the platform scales without additional headcount"
+  },
+  "partnerROI": {
+    "suppliers": [
+      "Reduce admin cost by 40%",
+      "Receive guaranteed payment via BNPL/Stripe",
+      "Access live demand forecasts",
+      "Eliminate order errors via ARGIC mapping"
+    ],
+    "techniciansGarages": [
+      "30% faster job allocation",
+      "Route optimisation saves ~1 hr/day",
+      "Instant part confirmation",
+      "Increased daily jobs = higher income"
+    ],
+    "tagline": "We grow because every partner wins — efficiency, reliability, and profit"
+  },
+  "compliance": {
+    "headline": "Enterprise-grade reliability and security",
+    "features": [
+      "GDPR-compliant Supabase EU storage",
+      "ISO-aligned data encryption",
+      "ADAS calibration certificates logged per job",
+      "Real-time audit trails for insurer verification"
+    ],
+    "message": "We built Windscreen Compare to enterprise standards from day one — ready for insurers, fleets, and national networks"
+  },
+  "traction": {
+    "headline": "From prototype to active network",
+    "metrics": [
+      {
+        "label": "Technicians Onboarded",
+        "value": "1,000+",
+        "icon": "users"
+      },
+      {
+        "label": "Quotes Generated",
+        "value": "15,000+",
+        "icon": "file-text"
+      },
+      {
+        "label": "Faster Job Allocation",
+        "value": "40%",
+        "icon": "zap"
+      },
+      {
+        "label": "Higher Technician Margins",
+        "value": "20%",
+        "icon": "trending-up"
+      }
+    ],
+    "partnerships": ["Pugh's", "Master Auto Glass", "Others in discussion"]
+  },
+  "revenueStreams": [
+    {
+      "name": "Job Commission",
+      "type": "B2C",
+      "description": "% per completed job"
+    },
+    {
+      "name": "Trade Subscription",
+      "type": "B2B",
+      "description": "Monthly plan for garages / fleets"
+    },
+    {
+      "name": "Supplier API Access",
+      "type": "B2B",
+      "description": "Integration + data fee"
+    },
+    {
+      "name": "Insurance / Fleet API Licensing",
+      "type": "B2B",
+      "description": "Direct data exchange for claims / maintenance"
+    },
+    {
+      "name": "Data Insights (Future)",
+      "type": "SaaS",
+      "description": "Market analytics for partners"
+    }
+  ],
+  "roadmap": {
+    "headline": "Execution roadmap to scale and exit",
+    "milestones": [
+      {
+        "period": "Q1–Q2 2025",
+        "goals": ["Supplier Network", "Tony AI v2"]
+      },
+      {
+        "period": "Q3 2025",
+        "goals": ["Fleet + Insurer APIs"]
+      },
+      {
+        "period": "Q4 2025",
+        "goals": ["Expansion to Ireland & Portugal"]
+      },
+      {
+        "period": "2026+",
+        "goals": ["API licensing", "Predictive Supply Engine"]
+      }
+    ],
+    "exitPotential": "Acquisition by major glass group or insurer tech platform"
+  },
+  "financials": {
+    "targetRevenue": "£2M by Year 3",
+    "preMoneyValuation": "£2M",
+    "equityOffered": "25%"
+  },
+  "designSystem": {
+    "theme": {
+      "primary": "#00C6C6",
+      "secondary": "#4DF9E3",
+      "background": "#0F1115",
+      "description": "Dark SaaS (charcoal, teal, mint)"
+    },
+    "typography": {
+      "fonts": ["Inter", "Satoshi"],
+      "style": "Semibold headers, light body"
+    },
+    "layout": {
+      "grid": "3-column card grid",
+      "padding": "96px",
+      "whitespace": "Minimal"
+    },
+    "iconography": "Feather / Lucide line icons",
+    "animation": "Smart Animate transitions, line pulses, counter up"
+  },
+  "callToAction": {
+    "headline": "Let's modernise an entire industry — together",
+    "primaryCTA": "Download Pitch Deck",
+    "secondaryCTA": "Schedule Investor Call"
+  },
+  "stakeholders": [
+    {
+      "name": "Vehicle Owners",
+      "icon": "car",
+      "benefits": [
+        "Instant quotes with transparent pricing",
+        "Same-day or next-day service",
+        "ADAS calibration included",
+        "Insurance claim support"
+      ]
+    },
+    {
+      "name": "Technicians",
+      "icon": "wrench",
+      "benefits": [
+        "Automated job allocation",
+        "Route optimization",
+        "Instant part confirmation",
+        "Higher daily earnings"
+      ]
+    },
+    {
+      "name": "Glass Suppliers",
+      "icon": "package",
+      "benefits": ["Reduced admin costs", "Guaranteed payments", "Live demand forecasts", "Automated order processing"]
+    },
+    {
+      "name": "Fleet Managers",
+      "icon": "truck",
+      "benefits": ["Centralized dashboard", "Scheduled maintenance", "Compliance tracking", "Volume discounts"]
+    },
+    {
+      "name": "Insurers",
+      "icon": "shield",
+      "benefits": [
+        "Automated claim validation",
+        "ADAS compliance verification",
+        "Reduced processing time",
+        "Fraud prevention"
+      ]
+    }
+  ]
+}
