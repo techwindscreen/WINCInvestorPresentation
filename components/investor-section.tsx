@@ -152,61 +152,49 @@ export function InvestorSection() {
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     
-    // Google Form configuration
-    const GOOGLE_FORM_ID = "1FAIpQLSfs6CRc9XgBHB_3VZrtcKFOuLtTgLz6bEX6flUCAftNFr4Awg"
-    const ENTRY_IDS = {
-      name: "entry.1250254499",
-      email: "entry.286189510",
-      investmentRange: "entry.544793908",
-      investorType: "entry.1855845316"
-    }
-    
     try {
-      // Debug: log form data
-      console.log("Form data being submitted:", formData)
-      
       // Validate required fields
       if (!formData.name || !formData.email || !formData.investmentRange || !formData.investorType) {
         alert("Please fill in all required fields.")
         return
       }
       
-      console.log("Submitting to Google Forms...")
-      console.log("Investment Range:", formData.investmentRange)
-      console.log("Investor Type:", formData.investorType)
+      console.log("Submitting form to API...")
       
-      // Build the pre-filled form URL
-      const baseUrl = `https://docs.google.com/forms/d/e/${GOOGLE_FORM_ID}/viewform`
-      const params = new URLSearchParams()
-      params.append(`${ENTRY_IDS.name}`, formData.name)
-      params.append(`${ENTRY_IDS.email}`, formData.email)
-      params.append(`${ENTRY_IDS.investmentRange}`, formData.investmentRange)
-      params.append(`${ENTRY_IDS.investorType}`, formData.investorType)
-      params.append('usp', 'pp_url')
-      params.append('submit', 'Submit')
-      
-      const prefilledUrl = `${baseUrl}?${params.toString()}`
-      
-      console.log("Opening pre-filled form:", prefilledUrl)
-      
-      // Open the pre-filled form in a new tab
-      window.open(prefilledUrl, '_blank')
-      
-      console.log("Form opened successfully!")
-      
-      // Show success message
-      alert("Thank you for your interest! Please complete the submission in the new tab that just opened.")
-      
-      // Clear the form
-      setFormData({
-        name: "",
-        email: "",
-        company: "",
-        role: "",
-        partnershipInterest: "",
-        investmentRange: "",
-        investorType: "",
+      // Submit to our API route which will forward to Google Forms
+      const response = await fetch('/api/submit-form', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          investmentRange: formData.investmentRange,
+          investorType: formData.investorType,
+        }),
       })
+      
+      const result = await response.json()
+      
+      if (result.success) {
+        console.log("Form submitted successfully!")
+        alert("Thank you for your interest! We'll be in touch within 24 hours.")
+        
+        // Clear the form
+        setFormData({
+          name: "",
+          email: "",
+          company: "",
+          role: "",
+          partnershipInterest: "",
+          investmentRange: "",
+          investorType: "",
+        })
+      } else {
+        console.error("Form submission failed:", result.message)
+        alert("There was an error submitting the form. Please try again.")
+      }
     } catch (error) {
       console.error("Error submitting form:", error)
       alert("There was an error submitting the form. Please try again.")
