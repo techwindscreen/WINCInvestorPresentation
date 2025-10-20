@@ -726,7 +726,7 @@ export function InvestorSection() {
       name: "James Lees", 
       role: "CTO", 
       experience: "SaaS & API architecture specialist",
-      linkedin: "https://www.linkedin.com/in/james-lees",
+      linkedin: "https://www.linkedin.com/in/james-lees-5b6bab13a/",
       image: "/5.jpg",
       imagePosition: "110% 30%",
       imageScale: 1.9,
