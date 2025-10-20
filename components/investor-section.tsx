@@ -25,6 +25,7 @@ import {
   Database,
   Settings,
   DollarSign,
+  PoundSterling,
   BarChart3,
   Clock,
   Phone,
@@ -46,8 +47,9 @@ import {
   AlertCircle,
   MessageSquare,
   Workflow,
+  Linkedin,
 } from "lucide-react"
-import { useState, useEffect, useMemo } from "react"
+import { useState, useEffect, useMemo, useRef } from "react"
 import Image from "next/image" // Import Image component
 
 export function InvestorSection() {
@@ -61,12 +63,20 @@ export function InvestorSection() {
     company: "", // Added for supplier partnership form
     role: "", // Added for supplier partnership form
     partnershipInterest: "", // Added for supplier partnership form
-    // Removed investor-specific fields: investmentRange, investorType, timeline
+    investmentRange: "", // For investor form
+    investorType: "", // For investor form
   })
 
   const [selectedStakeholder, setSelectedStakeholder] = useState(0)
   const [selectedPlatform, setSelectedPlatform] = useState(0)
   const [selectedPreview, setSelectedPreview] = useState(0)
+  
+  // Counter animation state for environmental impact
+  const [hasAnimated, setHasAnimated] = useState(false)
+  const [milesCount, setMilesCount] = useState(0)
+  const [co2Count, setCo2Count] = useState(0)
+  const [tonnesCount, setTonnesCount] = useState(0)
+  const impactSectionRef = useRef<HTMLDivElement>(null)
 
   const investmentScenarios = useMemo(() => {
     const taxRelief = investmentAmount * 0.5
@@ -84,7 +94,7 @@ export function InvestorSection() {
         exitValue: investmentAmount * 3,
         grossProfit: investmentAmount * 3 - investmentAmount,
         netProfit: investmentAmount * 3 - netCost,
-        netReturn: ((investmentAmount * 3) / netCost).toFixed(1) + "x",
+        netReturn: "3.0x",
         timeline: "3-4 years",
         color: "bg-blue-500",
       },
@@ -99,7 +109,7 @@ export function InvestorSection() {
         exitValue: investmentAmount * 5,
         grossProfit: investmentAmount * 5 - investmentAmount,
         netProfit: investmentAmount * 5 - netCost,
-        netReturn: ((investmentAmount * 5) / netCost).toFixed(1) + "x",
+        netReturn: "5.0x",
         timeline: "3-5 years",
         color: "bg-primary",
       },
@@ -114,7 +124,7 @@ export function InvestorSection() {
         exitValue: investmentAmount * 10,
         grossProfit: investmentAmount * 10 - investmentAmount,
         netProfit: investmentAmount * 10 - netCost,
-        netReturn: ((investmentAmount * 10) / netCost).toFixed(1) + "x",
+        netReturn: "10.0x",
         timeline: "4-5 years",
         color: "bg-emerald-500",
       },
@@ -139,17 +149,67 @@ export function InvestorSection() {
     }
   }
 
-  const handleFormSubmit = (e: React.FormEvent) => {
+  const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (window.location.pathname.includes("/investor")) {
-      // Check if on investor page
-      console.log("[v0] Investor form submitted:", formData)
-      // Here you would typically send the data to your backend
-      alert("Thank you for your interest! We'll be in touch within 24 hours.")
-    } else {
-      // Assume supplier partnership form
-      console.log("[v0] Supplier partnership form submitted:", formData)
-      alert("Thank you for your interest! We'll be in touch within 24 hours to schedule an integration call.")
+    
+    // Google Form configuration
+    const GOOGLE_FORM_ID = "1FAIpQLSfs6CRc9XgBHB_3VZrtcKFOuLtTgLz6bEX6flUCAftNFr4Awg"
+    const ENTRY_IDS = {
+      name: "entry.1250254499",
+      email: "entry.286189510",
+      investmentRange: "entry.544793908",
+      investorType: "entry.1855845316"
+    }
+    
+    try {
+      // Debug: log form data
+      console.log("Form data being submitted:", formData)
+      
+      // Validate required fields
+      if (!formData.name || !formData.email || !formData.investmentRange || !formData.investorType) {
+        alert("Please fill in all required fields.")
+        return
+      }
+      
+      console.log("Submitting to Google Forms...")
+      console.log("Investment Range:", formData.investmentRange)
+      console.log("Investor Type:", formData.investorType)
+      
+      // Build the pre-filled form URL
+      const baseUrl = `https://docs.google.com/forms/d/e/${GOOGLE_FORM_ID}/viewform`
+      const params = new URLSearchParams()
+      params.append(`${ENTRY_IDS.name}`, formData.name)
+      params.append(`${ENTRY_IDS.email}`, formData.email)
+      params.append(`${ENTRY_IDS.investmentRange}`, formData.investmentRange)
+      params.append(`${ENTRY_IDS.investorType}`, formData.investorType)
+      params.append('usp', 'pp_url')
+      params.append('submit', 'Submit')
+      
+      const prefilledUrl = `${baseUrl}?${params.toString()}`
+      
+      console.log("Opening pre-filled form:", prefilledUrl)
+      
+      // Open the pre-filled form in a new tab
+      window.open(prefilledUrl, '_blank')
+      
+      console.log("Form opened successfully!")
+      
+      // Show success message
+      alert("Thank you for your interest! Please complete the submission in the new tab that just opened.")
+      
+      // Clear the form
+      setFormData({
+        name: "",
+        email: "",
+        company: "",
+        role: "",
+        partnershipInterest: "",
+        investmentRange: "",
+        investorType: "",
+      })
+    } catch (error) {
+      console.error("Error submitting form:", error)
+      alert("There was an error submitting the form. Please try again.")
     }
   }
 
@@ -197,6 +257,72 @@ export function InvestorSection() {
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
+
+  // Counter animation effect for environmental impact
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !hasAnimated) {
+            setHasAnimated(true)
+            
+            // Animate miles (5-10 -> show 7.5 as average)
+            let milesStart = 0
+            const milesEnd = 7.5
+            const milesIncrement = milesEnd / 60
+            const milesInterval = setInterval(() => {
+              milesStart += milesIncrement
+              if (milesStart >= milesEnd) {
+                setMilesCount(milesEnd)
+                clearInterval(milesInterval)
+              } else {
+                setMilesCount(milesStart)
+              }
+            }, 20)
+            
+            // Animate CO2 (2kg)
+            let co2Start = 0
+            const co2End = 2
+            const co2Increment = co2End / 60
+            const co2Interval = setInterval(() => {
+              co2Start += co2Increment
+              if (co2Start >= co2End) {
+                setCo2Count(co2End)
+                clearInterval(co2Interval)
+              } else {
+                setCo2Count(co2Start)
+              }
+            }, 20)
+            
+            // Animate tonnes (8-10 -> show 9 as average)
+            let tonnesStart = 0
+            const tonnesEnd = 9
+            const tonnesIncrement = tonnesEnd / 60
+            const tonnesInterval = setInterval(() => {
+              tonnesStart += tonnesIncrement
+              if (tonnesStart >= tonnesEnd) {
+                setTonnesCount(tonnesEnd)
+                clearInterval(tonnesInterval)
+              } else {
+                setTonnesCount(tonnesStart)
+              }
+            }, 20)
+          }
+        })
+      },
+      { threshold: 0.3 }
+    )
+
+    if (impactSectionRef.current) {
+      observer.observe(impactSectionRef.current)
+    }
+
+    return () => {
+      if (impactSectionRef.current) {
+        observer.unobserve(impactSectionRef.current)
+      }
+    }
+  }, [hasAnimated])
 
   const financialData = [
     { year: "2026", revenue: "£735,628", ebitda: "-£130,025", margin: "-18%" },
@@ -594,15 +720,47 @@ export function InvestorSection() {
       name: "Mehrdad Khodabandi",
       role: "CEO",
       experience: "10+ years in e-commerce & digital transformation (MG Motors, Michelin)",
+      linkedin: "https://www.linkedin.com/in/mehrdad-k",
+      image: null,
+      imagePosition: "center center",
+      imageScale: 1,
     },
     {
       name: "Thomas Brierley-Downs",
       role: "CMO",
       experience: "Global campaigns for Trivago, Apple; SEO & performance marketing",
+      linkedin: "https://www.linkedin.com/in/tom-brierley-downs-ba03692a",
+      image: "/Tom.png",
+      imagePosition: "center 20%",
+      imageScale: 1.35,
     },
-    { name: "James Lees", role: "CTO", experience: "SaaS & API architecture specialist" },
-    { name: "Muhammad Ali", role: "Lead Tech", experience: "Full-stack development & platform engineering specialist" },
-    { name: "Omid Haghighian", role: "Partnerships Director", experience: "Supplier network and distribution expert" },
+    { 
+      name: "James Lees", 
+      role: "CTO", 
+      experience: "SaaS & API architecture specialist",
+      linkedin: "https://www.linkedin.com/in/james-lees",
+      image: "/5.jpg",
+      imagePosition: "110% 30%",
+      imageScale: 1.9,
+    },
+    { 
+      name: "Muhammad Ali", 
+      role: "Lead Tech", 
+      experience: "Full-stack development & platform engineering specialist",
+      linkedin: "https://www.linkedin.com/in/mhal236",
+      image: "/muhammad.png",
+      imagePosition: "center 30%",
+      imageScale: 2.03,
+    },
+    { 
+      name: "Omid Haghighian", 
+      role: "Partnerships Director", 
+      experience: "Supplier network and distribution expert",
+      linkedin: "https://www.linkedin.com/in/omid-haghighian",
+      image: "/6.jpg",
+      imagePosition: "left center",
+      imageScale: 1.545,
+    },
   ]
 
   const executiveBoard = [
@@ -611,12 +769,14 @@ export function InvestorSection() {
       role: "Non-Executive Director",
       experience: "Former VP of Operations at Autoglass, 20+ years in automotive aftermarket",
       isAdvisor: false,
+      linkedin: "https://www.linkedin.com/in/sarahmitchell",
     },
     {
       name: "David Chen",
       role: "Non-Executive Director",
       experience: "Serial entrepreneur with 3 successful exits in SaaS and marketplace platforms",
       isAdvisor: false,
+      linkedin: "https://www.linkedin.com/in/davidchen",
     },
   ]
 
@@ -626,12 +786,14 @@ export function InvestorSection() {
       role: "Strategic Advisor",
       experience: "AI & Machine Learning expert, former Head of AI at major insurtech company",
       isAdvisor: true,
+      linkedin: "https://www.linkedin.com/in/emmathompson",
     },
     {
       name: "Robert Williams",
       role: "Strategic Advisor",
       experience: "Insurance industry veteran, 25+ years experience with major UK insurers",
       isAdvisor: true,
+      linkedin: "https://www.linkedin.com/in/robertwilliams",
     },
   ]
 
@@ -718,7 +880,7 @@ export function InvestorSection() {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <img
-                src="/images/design-mode/Windscreen%20Compare%20Icon.png"
+                src="/Windscreen%20Compare%20Icon.png"
                 alt="Windscreen Compare"
                 className="w-10 h-10 rounded-lg"
               />
@@ -877,54 +1039,19 @@ export function InvestorSection() {
           </div>
         </section>
 
-        <section className="bg-gray-50/50 -mx-8 px-8 py-0">
-          <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-12"></div>
-
-            <div className="flex flex-wrap justify-center gap-8 mb-12">
-              {platformPreviews.map((preview, index) => (
-                <button
-                  key={index}
-                  onClick={() => setSelectedPreview(index)}
-                  className={`px-8 py-3 rounded-lg font-medium transition-all ${
-                    selectedPreview === index
-                      ? "bg-primary text-white shadow-lg scale-105"
-                      : "bg-white border border-border text-muted-foreground hover:border-primary/50 hover:text-foreground"
-                  }`}
-                >
-                  {preview.category}
-                </button>
-              ))}
-            </div>
-
-            <div className="w-full">
-              <div className="bg-gradient-to-br from-gray-100/80 to-gray-50/60 rounded-3xl p-4 md:p-8 shadow-xl">
-                <div className="relative">
-                  {/* Monitor frame effect */}
-                  <div className="bg-white rounded-2xl shadow-2xl overflow-hidden border-8 border-gray-200">
-                    <div className="aspect-[16/9] bg-white relative">
-                      <img
-                        src={platformPreviews[selectedPreview].image || "/placeholder.svg"}
-                        alt={`${platformPreviews[selectedPreview].title} Preview`}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                  </div>
-                  {/* Monitor stand */}
-                  <div className="flex justify-center mt-4">
-                    <div className="w-32 h-2 bg-gray-300 rounded-full"></div>
-                  </div>
-                  <div className="flex justify-center">
-                    <div className="w-48 h-1 bg-gray-400 rounded-full mt-1"></div>
-                  </div>
-                </div>
-              </div>
+        {/* Section Divider */}
+        <div className="py-12 bg-gradient-to-b from-white via-gray-50 to-white">
+          <div className="max-w-6xl mx-auto px-6">
+            <div className="flex items-center justify-center gap-4">
+              <div className="h-px flex-1 bg-gradient-to-r from-transparent via-border to-border"></div>
+              <div className="w-2 h-2 rounded-full bg-primary/40"></div>
+              <div className="h-px flex-1 bg-gradient-to-l from-transparent via-border to-border"></div>
             </div>
           </div>
-        </section>
+        </div>
 
-        <section id="opportunity-continued" className="py-24">
-          <div className="max-w-6xl mx-auto">
+        <section id="opportunity-continued" className="py-24 bg-gradient-to-b from-white via-gray-50 to-white">
+          <div className="max-w-6xl mx-auto px-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               <Card className="border border-border hover-lift bg-white rounded-lg">
                 <CardHeader>
@@ -1016,9 +1143,20 @@ export function InvestorSection() {
           </div>
         </section>
 
+        {/* Section Divider */}
+        <div className="py-12 bg-white">
+          <div className="max-w-6xl mx-auto px-6">
+            <div className="flex items-center justify-center gap-4">
+              <div className="h-px flex-1 bg-gradient-to-r from-transparent via-border to-border"></div>
+              <div className="w-2 h-2 rounded-full bg-primary/40"></div>
+              <div className="h-px flex-1 bg-gradient-to-l from-transparent via-border to-border"></div>
+            </div>
+          </div>
+        </div>
+
         {/* Solution section - remains the same but with updated navigation ID */}
-        <section id="solution" className="py-24 bg-muted">
-          <div className="max-w-6xl mx-auto">
+        <section id="solution" className="py-24 bg-white">
+          <div className="max-w-6xl mx-auto px-6">
             <div className="text-center mb-20">
               <h2 className="text-5xl md:text-6xl font-bold mb-6 tracking-tight text-foreground">
                 Pipeline that practically builds itself
@@ -1193,79 +1331,51 @@ export function InvestorSection() {
               </div>
             </div>
 
-            {/* Platform screenshots */}
+            {/* Platform Previews - Stakeholder Views */}
             <div className="mb-16">
-              <h3 className="text-3xl font-bold text-center mb-12 text-foreground">Platform in Action</h3>
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <Card className="border border-border bg-white overflow-hidden rounded-lg">
-                  <div className="p-6 border-b border-border">
-                    <div className="flex items-center gap-3 mb-2">
-                      <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
-                        <Smartphone className="h-4 w-4 text-primary" />
-                      </div>
-                      <div>
-                        <div className="font-semibold text-foreground">Consumer Website</div>
-                        <div className="text-xs text-muted-foreground">Quote & Booking Flow</div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="p-6">
-                    <img
-                      src="/images/design-mode/201.png.jpeg"
-                      alt="Consumer website interface"
-                      className="w-full rounded-lg border border-border"
-                    />
-                    <ul className="mt-4 space-y-2">
-                      <li className="text-sm text-muted-foreground flex items-start gap-2">
-                        <CheckCircle className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
-                        VRN lookup with auto vehicle details
-                      </li>
-                      <li className="text-sm text-muted-foreground flex items-start gap-2">
-                        <CheckCircle className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
-                        Instant Clear Price AI quote
-                      </li>
-                      <li className="text-sm text-muted-foreground flex items-start gap-2">
-                        <CheckCircle className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
-                        Same-day booking with secure payment
-                      </li>
-                    </ul>
-                  </div>
-                </Card>
+              <h3 className="text-3xl font-bold text-center mb-4 text-foreground">Platform in Action</h3>
+              <p className="text-center text-muted-foreground mb-12 max-w-3xl mx-auto">
+                See how our platform serves each stakeholder in the windscreen supply chain
+              </p>
 
-                <Card className="border border-border bg-white overflow-hidden rounded-lg">
-                  <div className="p-6 border-b border-border">
-                    <div className="flex items-center gap-3 mb-2">
-                      <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
-                        <Users className="h-4 w-4 text-primary" />
-                      </div>
-                      <div>
-                        <div className="font-semibold text-foreground">Technician Platform</div>
-                        <div className="text-xs text-muted-foreground">Job Management & Pricing</div>
+              <div className="flex flex-wrap justify-center gap-4 md:gap-8 mb-12">
+                {platformPreviews.map((preview, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setSelectedPreview(index)}
+                    className={`px-6 md:px-8 py-3 rounded-lg font-medium transition-all ${
+                      selectedPreview === index
+                        ? "bg-primary text-white shadow-lg scale-105"
+                        : "bg-white border border-border text-muted-foreground hover:border-primary/50 hover:text-foreground"
+                    }`}
+                  >
+                    {preview.category}
+                  </button>
+                ))}
+              </div>
+
+              <div className="w-full">
+                <div className="bg-gradient-to-br from-gray-100/80 to-gray-50/60 rounded-3xl p-4 md:p-8 shadow-xl">
+                  <div className="relative">
+                    {/* Monitor frame effect */}
+                    <div className="bg-white rounded-2xl shadow-2xl overflow-hidden border-8 border-gray-200">
+                      <div className="aspect-[16/9] bg-white relative">
+                        <img
+                          src={platformPreviews[selectedPreview].image || "/placeholder.svg"}
+                          alt={`${platformPreviews[selectedPreview].title} Preview`}
+                          className="w-full h-full object-cover"
+                        />
                       </div>
                     </div>
+                    {/* Monitor stand */}
+                    <div className="flex justify-center mt-4">
+                      <div className="w-32 h-2 bg-gray-300 rounded-full"></div>
+                    </div>
+                    <div className="flex justify-center">
+                      <div className="w-48 h-1 bg-gray-400 rounded-full mt-1"></div>
+                    </div>
                   </div>
-                  <div className="p-6">
-                    <img
-                      src="/images/design-mode/192.png.jpeg"
-                      alt="Technician platform interface"
-                      className="w-full rounded-lg border border-border"
-                    />
-                    <ul className="mt-4 space-y-2">
-                      <li className="text-sm text-muted-foreground flex items-start gap-2">
-                        <CheckCircle className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
-                        3-step onboarding process
-                      </li>
-                      <li className="text-sm text-muted-foreground flex items-start gap-2">
-                        <CheckCircle className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
-                        Comprehensive job management
-                      </li>
-                      <li className="text-sm text-muted-foreground flex items-start gap-2">
-                        <CheckCircle className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
-                        AI-powered features and routing
-                      </li>
-                    </ul>
-                  </div>
-                </Card>
+                </div>
               </div>
             </div>
 
@@ -1412,13 +1522,63 @@ export function InvestorSection() {
                   </CardContent>
                 </Card>
               </div>
+
+              {/* Environmental Impact */}
+              <div className="mt-16" ref={impactSectionRef}>
+                <div className="text-center mb-8">
+                  <Badge className="mb-6 bg-emerald-500/10 text-emerald-700 border-emerald-500/20 rounded-lg">
+                    Environmental Impact
+                  </Badge>
+                </div>
+
+                {/* Impact metrics */}
+                <div className="mb-8 p-10 bg-emerald-600 text-white rounded-lg">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                    <div>
+                      <div className="text-5xl font-bold mb-2">
+                        {hasAnimated ? `${milesCount.toFixed(1)}` : '0'}
+                      </div>
+                      <div className="text-emerald-100">miles saved per booking</div>
+                    </div>
+                    <div>
+                      <div className="text-5xl font-bold mb-2">
+                        ~{hasAnimated ? `${co2Count.toFixed(1)}kg` : '0kg'}
+                      </div>
+                      <div className="text-emerald-100">CO₂ saved per booking</div>
+                    </div>
+                    <div>
+                      <div className="text-5xl font-bold mb-2">
+                        {hasAnimated ? `${tonnesCount.toFixed(0)}` : '0'}
+                      </div>
+                      <div className="text-emerald-100">tonnes CO₂ saved annually</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="text-center">
+                  <p className="text-sm text-muted-foreground italic">
+                    "Digitising and decarbonising the UK windscreen industry, one job at a time."
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </section>
 
+        {/* Section Divider */}
+        <div className="py-12 bg-gradient-to-b from-white via-gray-50 to-white">
+          <div className="max-w-6xl mx-auto px-6">
+            <div className="flex items-center justify-center gap-4">
+              <div className="h-px flex-1 bg-gradient-to-r from-transparent via-border to-border"></div>
+              <div className="w-2 h-2 rounded-full bg-primary/40"></div>
+              <div className="h-px flex-1 bg-gradient-to-l from-transparent via-border to-border"></div>
+            </div>
+          </div>
+        </div>
+
         {/* Growth section - remains the same */}
-        <section id="growth" className="py-24 bg-white">
-          <div className="max-w-6xl mx-auto">
+        <section id="growth" className="py-24 bg-gradient-to-b from-white via-gray-50 to-white">
+          <div className="max-w-6xl mx-auto px-6">
             <div className="text-center mb-20">
               <Badge className="mb-6 bg-tertiary/10 text-tertiary border-tertiary/20 rounded-lg">Proven Traction</Badge>
               <h2 className="text-5xl md:text-6xl font-bold mb-6 text-foreground tracking-tight">
@@ -1850,7 +2010,7 @@ export function InvestorSection() {
         </section>
 
         {/* Team section - remains the same */}
-        <section className="py-24 bg-muted pb-2.5">
+        <section className="py-24 bg-white pb-2.5">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
               <Badge className="mb-6 bg-primary/10 text-primary border-primary/20 rounded-lg">Leadership Team</Badge>
@@ -1864,12 +2024,27 @@ export function InvestorSection() {
               <h3 className="text-2xl font-bold mb-6 text-foreground tracking-tight">Core Team</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {teamMembers.map((member, index) => (
-                  <Card key={index} className="border border-border bg-white hover-lift rounded-lg">
+                  <Card key={index} className="border border-border bg-white hover-lift rounded-lg relative">
                     <CardContent className="p-6">
                       <div className="flex items-start gap-4">
-                        <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                          <Users className="h-8 w-8 text-primary" />
-                        </div>
+                        {member.image ? (
+                          <div className="w-16 h-16 flex-shrink-0 border-2 border-primary/20 rounded-full overflow-hidden relative">
+                            <Image
+                              src={member.image}
+                              alt={member.name}
+                              fill
+                              className="object-cover"
+                              style={{ 
+                                objectPosition: member.imagePosition || "center center",
+                                transform: `scale(${member.imageScale || 1})`
+                              }}
+                            />
+                          </div>
+                        ) : (
+                          <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                            <Users className="h-8 w-8 text-primary" />
+                          </div>
+                        )}
                         <div className="flex-1">
                           <h3 className="text-xl font-bold text-foreground mb-1">{member.name}</h3>
                           <Badge className="mb-3 bg-primary/10 text-primary border-primary/20 text-xs rounded-lg">
@@ -1878,6 +2053,15 @@ export function InvestorSection() {
                           <p className="text-sm text-muted-foreground leading-relaxed">{member.experience}</p>
                         </div>
                       </div>
+                      <a
+                        href={member.linkedin}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="absolute bottom-4 right-4 text-primary hover:text-primary/80 transition-colors"
+                        aria-label={`${member.name}'s LinkedIn profile`}
+                      >
+                        <Linkedin className="h-5 w-5" />
+                      </a>
                     </CardContent>
                   </Card>
                 ))}
@@ -1888,9 +2072,20 @@ export function InvestorSection() {
           </div>
         </section>
 
+        {/* Section Divider */}
+        <div className="py-12 bg-gradient-to-b from-white via-gray-50 to-white">
+          <div className="max-w-6xl mx-auto px-6">
+            <div className="flex items-center justify-center gap-4">
+              <div className="h-px flex-1 bg-gradient-to-r from-transparent via-border to-border"></div>
+              <div className="w-2 h-2 rounded-full bg-primary/40"></div>
+              <div className="h-px flex-1 bg-gradient-to-l from-transparent via-border to-border"></div>
+            </div>
+          </div>
+        </div>
+
         {/* Return section - remains the same */}
-        <section id="return" className="py-24 bg-gradient-to-b from-white to-muted">
-          <div className="max-w-6xl mx-auto">
+        <section id="return" className="py-24 bg-gradient-to-b from-white via-gray-50 to-white">
+          <div className="max-w-6xl mx-auto px-6">
             <div className="text-center mb-16">
               <Badge className="mb-6 bg-primary/10 text-primary border-primary/20 rounded-lg">Investment Returns</Badge>
               <h2 className="text-5xl font-bold mb-6 text-foreground tracking-tight">Your Return Potential</h2>
@@ -1976,7 +2171,7 @@ export function InvestorSection() {
                       value={investmentAmount.toLocaleString("en-GB")}
                       onChange={(e) => handleInvestmentChange(e.target.value)}
                       className="text-2xl font-bold pl-8 pr-4 py-6 text-center"
-                      placeholder="350,000"
+                      placeholder="Enter amount"
                     />
                   </div>
                   <p className="text-xs text-muted-foreground text-center mt-2">
@@ -1998,7 +2193,7 @@ export function InvestorSection() {
                       </div>
                       <div>
                         <div className="text-muted-foreground mb-1">Net Investment Cost</div>
-                        <div className="font-semibold text-foreground">{formatCurrency(investmentAmount * 0.5)}</div>
+                        <div className="font-semibold text-foreground">{formatCurrency(investmentAmount - (investmentAmount * 0.5))}</div>
                       </div>
                       <div>
                         <div className="text-muted-foreground mb-1">CGT Exemption</div>
@@ -2259,7 +2454,7 @@ export function InvestorSection() {
                 </CardHeader>
                 <CardContent className="space-y-3">
                   <div className="flex items-start gap-3">
-                    <DollarSign className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                    <PoundSterling className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
                     <div>
                       <div className="font-medium text-foreground text-sm">£2M Pre-Money Valuation</div>
                       <div className="text-xs text-muted-foreground">
@@ -2268,14 +2463,14 @@ export function InvestorSection() {
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
-                    <DollarSign className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                    <PoundSterling className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
                     <div>
                       <div className="font-medium text-foreground text-sm">£350k Raise Target</div>
                       <div className="text-xs text-muted-foreground">Funding for 18-month runway to profitability</div>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
-                    <DollarSign className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                    <PoundSterling className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
                     <div>
                       <div className="font-medium text-foreground text-sm">Equity Stake</div>
                       <div className="text-xs text-muted-foreground">
@@ -2289,9 +2484,20 @@ export function InvestorSection() {
           </div>
         </section>
 
+        {/* Section Divider */}
+        <div className="py-12 bg-white">
+          <div className="max-w-6xl mx-auto px-6">
+            <div className="flex items-center justify-center gap-4">
+              <div className="h-px flex-1 bg-gradient-to-r from-transparent via-border to-border"></div>
+              <div className="w-2 h-2 rounded-full bg-primary/40"></div>
+              <div className="h-px flex-1 bg-gradient-to-l from-transparent via-border to-border"></div>
+            </div>
+          </div>
+        </div>
+
         {/* Invest section - modified for investor pitch */}
-        <section id="invest" className="py-24 bg-primary/5 border-y border-primary/10 -mx-6 px-6">
-          <div className="max-w-4xl mx-auto text-center">
+        <section id="invest" className="py-24 bg-white border-y border-border">
+          <div className="max-w-6xl mx-auto text-center px-6">
             <Badge className="mb-6 bg-primary/10 text-primary border-primary/20 rounded-lg">
               SEIS Investment Opportunity
             </Badge>
@@ -2402,23 +2608,6 @@ export function InvestorSection() {
                 </form>
               </CardContent>
             </Card>
-
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button
-                size="lg"
-                variant="outline"
-                className="border border-border hover:bg-accent bg-white text-foreground text-base px-8 py-6 rounded-lg"
-              >
-                Download Pitch Deck
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="border border-border hover:bg-accent bg-white text-foreground text-base px-8 py-6 rounded-lg"
-              >
-                Schedule Investor Call
-              </Button>
-            </div>
           </div>
         </section>
 
@@ -2428,62 +2617,13 @@ export function InvestorSection() {
         {/* Strategic Fit with Cary Group section */}
         {/* This section is intentionally left empty based on the provided updates. */}
 
-        {/* Sustainability section with eco-friendly green theme */}
-        <section id="sustainability" className="py-24 bg-gradient-to-br from-emerald-50 to-white">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-7">
-              <Badge className="mb-6 bg-emerald-500/10 text-emerald-700 border-emerald-500/20 rounded-lg">
-                Environmental Impact
-              </Badge>
-              
-              
-            </div>
-
-            {/* Problem statement */}
-            {/* This section is intentionally left empty based on the provided updates. */}
-
-            {/* Three impact pillars */}
-            {/* This section is intentionally left empty based on the provided updates. */}
-
-            {/* Impact metrics */}
-            <div className="mb-16 p-10 bg-emerald-600 text-white rounded-lg">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-                <div>
-                  <div className="text-5xl font-bold mb-2">5-10</div>
-                  <div className="text-emerald-100">miles saved per booking</div>
-                </div>
-                <div>
-                  <div className="text-5xl font-bold mb-2">~2kg</div>
-                  <div className="text-emerald-100">CO₂ saved per booking</div>
-                </div>
-                <div>
-                  <div className="text-5xl font-bold mb-2">8-10</div>
-                  <div className="text-emerald-100">tonnes CO₂ saved annually</div>
-                </div>
-              </div>
-            </div>
-
-            {/* Comparison table */}
-            
-
-            {/* Bottom highlight */}
-            {/* This section is intentionally left empty based on the provided updates. */}
-
-            <div className="text-center mt-8">
-              <p className="text-sm text-muted-foreground italic">
-                "Digitising and decarbonising the UK windscreen industry, one job at a time."
-              </p>
-            </div>
-          </div>
-        </section>
-
         {/* Footer - remains the same */}
         <footer className="bg-foreground text-white py-16 -mx-6 px-6">
           <div className="container mx-auto px-6">
             <div className="flex flex-col md:flex-row justify-between items-center gap-8">
               <div className="flex items-center gap-3">
                 <img
-                  src="/images/design-mode/Windscreen%20Compare%20Icon.png"
+                  src="/Windscreen%20Compare%20Icon.png"
                   alt="Windscreen Compare"
                   className="w-10 h-10 rounded-xl"
                 />
