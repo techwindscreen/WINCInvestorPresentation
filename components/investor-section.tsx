@@ -709,9 +709,9 @@ export function InvestorSection() {
       role: "CEO",
       experience: "10+ years in e-commerce & digital transformation (MG Motors, Michelin)",
       linkedin: "https://www.linkedin.com/in/mehrdad-k",
-      image: null,
-      imagePosition: "center center",
-      imageScale: 1,
+      image: "/mehrdad.jpeg",
+      imagePosition: "center 20%",
+      imageScale: 1.35,
     },
     {
       name: "Thomas Brierley-Downs",
@@ -874,7 +874,7 @@ export function InvestorSection() {
               />
               <div>
                 <div className="font-semibold text-foreground text-lg tracking-tight">Windscreen Compare</div>
-                <div className="text-xs text-muted-foreground">Investor Presentation</div>
+                <div className="text-xs text-muted-foreground">Investor</div>
               </div>
             </div>
             <div className="hidden lg:flex items-center gap-1">
