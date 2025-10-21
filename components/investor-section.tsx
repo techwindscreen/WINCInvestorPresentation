@@ -704,7 +704,7 @@ export function InvestorSection() {
     {
       name: "Mehrdad Khodabandi",
       role: "CEO",
-      experience: "10+ years in e-commerce & digital transformation (MG Motors, Michelin)",
+      experience: "Over 10 years leading e-commerce innovation and digital transformation across brands including MG Motors and Michelin, with a strong focus on AI strategy, automation and business optimisation.",
       linkedin: "https://www.linkedin.com/in/mehrdad-k",
       image: "/mehrdad.jpeg",
       imagePosition: "center 20%",
@@ -713,7 +713,7 @@ export function InvestorSection() {
     {
       name: "Thomas Brierley-Downs",
       role: "CMO",
-      experience: "Global campaigns for Trivago, Apple; SEO & performance marketing",
+      experience: "Formerly led global campaigns for Trivago and Apple, specialising in performance marketing, SEO strategy and growth acceleration.",
       linkedin: "https://www.linkedin.com/in/tom-brierley-downs-ba03692a",
       image: "/Tom.png",
       imagePosition: "center 20%",
@@ -722,7 +722,7 @@ export function InvestorSection() {
     { 
       name: "James Lees", 
       role: "CTO", 
-      experience: "SaaS & API architecture specialist",
+      experience: "Expert in SaaS and API architecture, with extensive experience scaling secure, high-performance digital platforms.",
       linkedin: "https://www.linkedin.com/in/james-lees-5b6bab13a/",
       image: "/5.jpg",
       imagePosition: "110% 30%",
@@ -731,7 +731,7 @@ export function InvestorSection() {
     { 
       name: "Muhammad Ali", 
       role: "Lead Tech", 
-      experience: "Full-stack development & platform engineering specialist",
+      experience: "Full-stack developer specialising in platform engineering, automation and machine learning-driven optimisation.",
       linkedin: "https://www.linkedin.com/in/mhal236",
       image: "/muhammad.png",
       imagePosition: "center 30%",
@@ -739,8 +739,8 @@ export function InvestorSection() {
     },
     { 
       name: "Omid Haghighian", 
-      role: "Partnerships Director", 
-      experience: "Supplier network and distribution expert",
+      role: "Sales & Partnerships Director", 
+      experience: "Sales and customer success specialist with a proven track record in building supplier relationships and delivering exceptional client service.",
       linkedin: "https://www.linkedin.com/in/omid-haghighian",
       image: "/6.jpg",
       imagePosition: "left center",
