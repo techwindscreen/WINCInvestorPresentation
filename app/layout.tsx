@@ -8,6 +8,11 @@ export const metadata: Metadata = {
   title: 'Windscreen Compare Investor',
   description: 'Windscreen Compare Investor',
   generator: 'Windscreen Compare Investor',
+  icons: {
+    icon: '/Windscreen Compare Icon.png',
+    shortcut: '/Windscreen Compare Icon.png',
+    apple: '/Windscreen Compare Icon.png',
+  },
 }
 
 export default function RootLayout({

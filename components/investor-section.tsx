@@ -209,11 +209,8 @@ export function InvestorSection() {
     // Updated navigation for supplier pitch
     { id: "opportunity", label: "Opportunity" }, // Changed from "vision" to "opportunity"
     { id: "solution", label: "Solution" },
-    { id: "growth", label: "Growth" },
-    { id: "strategic-fit", label: "Strategic Fit" }, // Added Strategic Fit
-    { id: "sustainability", label: "Sustainability" }, // Added Sustainability
+    { id: "financials", label: "Financials" }, // Links to financial projections section
     { id: "return", label: "Return" },
-    { id: "invest", label: "Invest" },
     { id: "partnership", label: "Partnership" }, // Added Partnership
   ]
 
@@ -670,7 +667,7 @@ export function InvestorSection() {
       title: "Supplier Portal",
       description: "Direct integration for suppliers to manage stock, orders, and gain market visibility.",
       category: "Suppliers",
-      image: "/images/design-mode/api-interface.png", // Placeholder image
+      image: "/WinCTrade.png",
       features: [
         "Real-time stock and pricing API",
         "Automated order placement",
@@ -683,7 +680,7 @@ export function InvestorSection() {
       title: "Fleet Management",
       description: "A dedicated portal for fleet managers to streamline bulk bookings and track job progress.",
       category: "Fleet Managers",
-      image: "/images/design-mode/fleet-portal.png", // Placeholder image
+      image: "/CRMDashboard.png",
       features: [
         "Bulk booking capabilities",
         "Real-time job tracking",
@@ -894,8 +891,11 @@ export function InvestorSection() {
                 </Button>
               ))}
             </div>
-            <Button className="bg-primary text-white hover:bg-primary/90 shadow-sm rounded-lg">
-              Get Started
+            <Button 
+              className="bg-primary text-white hover:bg-primary/90 shadow-sm rounded-lg"
+              onClick={() => document.getElementById('invest')?.scrollIntoView({ behavior: 'smooth' })}
+            >
+              Invest Now
               <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
           </div>
@@ -1341,7 +1341,10 @@ export function InvestorSection() {
               </div>
 
               <div className="w-full">
-                <div className="bg-gradient-to-br from-gray-100/80 to-gray-50/60 rounded-3xl p-4 md:p-8 shadow-xl">
+                <div 
+                  key={selectedPreview}
+                  className="bg-gradient-to-br from-gray-100/80 to-gray-50/60 rounded-3xl p-4 md:p-8 shadow-xl animate-in fade-in slide-in-from-right-4 duration-500"
+                >
                   <div className="relative">
                     {/* Monitor frame effect */}
                     <div className="bg-white rounded-2xl shadow-2xl overflow-hidden border-8 border-gray-200">
@@ -1349,7 +1352,7 @@ export function InvestorSection() {
                         <img
                           src={platformPreviews[selectedPreview].image || "/placeholder.svg"}
                           alt={`${platformPreviews[selectedPreview].title} Preview`}
-                          className="w-full h-full object-cover"
+                          className={`w-full h-full ${platformPreviews[selectedPreview].category === "Fleet Managers" || platformPreviews[selectedPreview].category === "Suppliers" ? "object-contain" : "object-cover"}`}
                         />
                       </div>
                     </div>
@@ -1948,13 +1951,80 @@ export function InvestorSection() {
               </Card>
             </div>
 
-            {/* Financial projections */}
+            {/* Team section moved here */}
+            <div className="mt-16">
+              <div className="text-center mb-16">
+                <Badge className="mb-6 bg-primary/10 text-primary border-primary/20 rounded-lg">Leadership Team</Badge>
+                <h2 className="text-5xl font-bold mb-6 text-foreground tracking-tight">Meet the Team</h2>
+                <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed font-light">
+                  Experienced founders with proven track records in automotive, tech, and digital transformation
+                </p>
+              </div>
+
+              <div className="mb-12">
+                <h3 className="text-2xl font-bold mb-6 text-foreground tracking-tight">Core Team</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {teamMembers.map((member, index) => (
+                    <Card key={index} className="border border-border bg-white hover-lift rounded-lg relative">
+                      <CardContent className="p-6">
+                        <div className="flex items-start gap-4">
+                          {member.image ? (
+                            <div className="w-16 h-16 flex-shrink-0 border-2 border-primary/20 rounded-full overflow-hidden relative">
+                              <Image
+                                src={member.image}
+                                alt={member.name}
+                                fill
+                                className="object-cover"
+                                style={{ 
+                                  objectPosition: member.imagePosition || "center center",
+                                  transform: `scale(${member.imageScale || 1})`
+                                }}
+                              />
+                            </div>
+                          ) : (
+                            <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                              <Users className="h-8 w-8 text-primary" />
+                            </div>
+                          )}
+                          <div className="flex-1">
+                            <h3 className="text-xl font-bold text-foreground mb-1">{member.name}</h3>
+                            <Badge className="mb-3 bg-primary/10 text-primary border-primary/20 text-xs rounded-lg">
+                              {member.role}
+                            </Badge>
+                            <p className="text-sm text-muted-foreground leading-relaxed">{member.experience}</p>
+                          </div>
+                        </div>
+                        <a
+                          href={member.linkedin}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="absolute bottom-4 right-4 text-primary hover:text-primary/80 transition-colors"
+                          aria-label={`${member.name}'s LinkedIn profile`}
+                        >
+                          <Linkedin className="h-5 w-5" />
+                        </a>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Financial Projections section - now separate with header */}
+        <section id="financials" className="py-24 bg-white pb-2.5">
+          <div className="max-w-6xl mx-auto px-6">
+            <div className="text-center mb-16">
+              <Badge className="mb-6 bg-primary/10 text-primary border-primary/20 rounded-lg">Financial Projections</Badge>
+              <h2 className="text-5xl font-bold mb-6 text-foreground tracking-tight">Financial Projections</h2>
+              <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed font-light">
+                Strong unit economics with a clear path to profitability and sustainable growth
+              </p>
+            </div>
+
             <Card className="border border-border bg-white rounded-lg">
-              <CardHeader>
-                <CardTitle className="text-2xl tracking-tight">Financial Projections</CardTitle>
-                <p className="text-sm text-muted-foreground">Break-even in Year 3, 25%+ EBITDA margins by Year 5</p>
-              </CardHeader>
-              <CardContent>
+              <CardContent className="p-8">
                 <div className="overflow-x-auto">
                   <table className="w-full">
                     <thead>
@@ -1968,7 +2038,7 @@ export function InvestorSection() {
                     <tbody>
                       {financialData.map((row, index) => (
                         <tr key={index} className="border-b border-border/50">
-                          <td className="py-4 font-medium text-foreground">{row.year}</td>
+                          <td className="py-4 px-6 font-medium text-foreground">{row.year}</td>
                           <td className="text-right py-4 px-6 text-foreground">{row.revenue}</td>
                           <td
                             className={`text-right py-4 px-6 ${row.ebitda.startsWith("-") ? "text-destructive" : "text-primary"}`}
@@ -1987,69 +2057,6 @@ export function InvestorSection() {
                 </div>
               </CardContent>
             </Card>
-          </div>
-        </section>
-
-        {/* Team section - remains the same */}
-        <section className="py-24 bg-white pb-2.5">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-16">
-              <Badge className="mb-6 bg-primary/10 text-primary border-primary/20 rounded-lg">Leadership Team</Badge>
-              <h2 className="text-5xl font-bold mb-6 text-foreground tracking-tight">Meet the Team</h2>
-              <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed font-light">
-                Experienced founders with proven track records in automotive, tech, and digital transformation
-              </p>
-            </div>
-
-            <div className="mb-12">
-              <h3 className="text-2xl font-bold mb-6 text-foreground tracking-tight">Core Team</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {teamMembers.map((member, index) => (
-                  <Card key={index} className="border border-border bg-white hover-lift rounded-lg relative">
-                    <CardContent className="p-6">
-                      <div className="flex items-start gap-4">
-                        {member.image ? (
-                          <div className="w-16 h-16 flex-shrink-0 border-2 border-primary/20 rounded-full overflow-hidden relative">
-                            <Image
-                              src={member.image}
-                              alt={member.name}
-                              fill
-                              className="object-cover"
-                              style={{ 
-                                objectPosition: member.imagePosition || "center center",
-                                transform: `scale(${member.imageScale || 1})`
-                              }}
-                            />
-                          </div>
-                        ) : (
-                          <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                            <Users className="h-8 w-8 text-primary" />
-                          </div>
-                        )}
-                        <div className="flex-1">
-                          <h3 className="text-xl font-bold text-foreground mb-1">{member.name}</h3>
-                          <Badge className="mb-3 bg-primary/10 text-primary border-primary/20 text-xs rounded-lg">
-                            {member.role}
-                          </Badge>
-                          <p className="text-sm text-muted-foreground leading-relaxed">{member.experience}</p>
-                        </div>
-                      </div>
-                      <a
-                        href={member.linkedin}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="absolute bottom-4 right-4 text-primary hover:text-primary/80 transition-colors"
-                        aria-label={`${member.name}'s LinkedIn profile`}
-                      >
-                        <Linkedin className="h-5 w-5" />
-                      </a>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </div>
-
-            <div className="mt-12 text-center"></div>
           </div>
         </section>
 
@@ -2580,38 +2587,38 @@ export function InvestorSection() {
 
         {/* Strategic Fit with Cary Group section */}
         {/* This section is intentionally left empty based on the provided updates. */}
-
-        {/* Footer - remains the same */}
-        <footer className="bg-foreground text-white py-16 -mx-6 px-6">
-          <div className="container mx-auto px-6">
-            <div className="flex flex-col md:flex-row justify-between items-center gap-8">
-              <div className="flex items-center gap-3">
-                <img
-                  src="/Windscreen%20Compare%20Icon.png"
-                  alt="Windscreen Compare"
-                  className="w-10 h-10 rounded-xl"
-                />
-                <div>
-                  <div className="font-semibold text-white">Windscreen Compare</div>
-                  <div className="text-xs text-white/60">AI-Powered Windscreen Solutions</div>
-                </div>
-              </div>
-              <div className="flex items-center gap-8 text-sm text-white/70">
-                <a href="#" className="hover:text-white transition-colors">
-                  Platform
-                </a>
-                <a href="#" className="hover:text-white transition-colors">
-                  Investment
-                </a>
-                <a href="#" className="hover:text-white transition-colors">
-                  Contact
-                </a>
-              </div>
-              <div className="text-sm text-white/60">© 2025 Windscreen Compare Limited</div>
-            </div>
-          </div>
-        </footer>
       </div>
+
+      {/* Footer - remains the same */}
+      <footer className="bg-foreground text-white py-16 w-full">
+        <div className="container mx-auto px-6">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-8">
+            <div className="flex items-center gap-3">
+              <img
+                src="/Windscreen%20Compare%20Icon.png"
+                alt="Windscreen Compare"
+                className="w-10 h-10 rounded-xl"
+              />
+              <div>
+                <div className="font-semibold text-white">Windscreen Compare</div>
+                <div className="text-xs text-white/60">AI-Powered Windscreen Solutions</div>
+              </div>
+            </div>
+            <div className="flex items-center gap-8 text-sm text-white/70">
+              <a href="#" className="hover:text-white transition-colors">
+                Platform
+              </a>
+              <a href="#" className="hover:text-white transition-colors">
+                Investment
+              </a>
+              <a href="#" className="hover:text-white transition-colors">
+                Contact
+              </a>
+            </div>
+            <div className="text-sm text-white/60">© 2025 Windscreen Compare Limited</div>
+          </div>
+        </div>
+      </footer>
     </div>
   )
 }
