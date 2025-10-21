@@ -354,7 +354,7 @@ export function InvestorSection() {
       icon: Users,
       title: "Technicians",
       before: "High ad spend for leads, wasted stock calls, no central job system",
-      after: "Accept jobs, check stock, route to customers, and get paid instantly — all in one app",
+      after: "Accept jobs, check stock, route to customers, and get paid instantly: all in one app",
       delivered: [
         "CRM & app with Google Maps API routing",
         "Live supplier stock checks",
@@ -997,7 +997,7 @@ export function InvestorSection() {
               >
                 <span className="text-gray-900">The Windscreen Supply Chain Is Broken - </span>
                 <span className="bg-gradient-to-r from-primary via-teal-500 to-cyan-500 bg-clip-text text-transparent">
-                  Were Fixing It!
+                  We're Fixing It!
                 </span>
               </h1>
 
@@ -1006,7 +1006,7 @@ export function InvestorSection() {
                 className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed mb-10"
                 style={{ animation: "fadeInUp 0.8s ease-out 0.4s backwards" }}
               >
-                Connecting customers, technicians & suppliers — all in one AI-powered platform built to fix inefficiency
+                Connecting customers, technicians & suppliers: all in one AI-powered platform built to fix inefficiency
                 and scale the industry.
               </p>
 
@@ -1080,7 +1080,7 @@ export function InvestorSection() {
                     </li>
                     <div className="p-4 bg-accent rounded-lg border border-border">
                       <p className="text-sm text-foreground">
-                        <strong>The system is broken — and its ready for disruption.</strong>
+                        <strong>The system is broken and its ready for disruption.</strong>
                       </p>
                     </div>
                   </ul>
@@ -1117,12 +1117,12 @@ export function InvestorSection() {
                   </div>
                   <div className="p-4 bg-accent rounded-lg border border-border">
                     <p className="text-sm text-foreground">
-                      £10 B+ European market — fragmented, offline and under-digitised
+                      £10 B+ European market: fragmented, offline and under-digitised
                     </p>
                   </div>
                   <div className="p-4 bg-accent rounded-lg border border-border">
                     <p className="text-sm text-foreground">
-                      $15 B+ U.S. market — same inefficiencies, high consolidation potential
+                      $15 B+ U.S. market: same inefficiencies, high consolidation potential
                     </p>
                   </div>
                 </CardContent>
