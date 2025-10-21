@@ -874,7 +874,7 @@ export function InvestorSection() {
               />
               <div>
                 <div className="font-semibold text-foreground text-lg tracking-tight">Windscreen Compare</div>
-                <div className="text-xs text-muted-foreground">Investor</div>
+                <div className="text-xs text-muted-foreground">Investors</div>
               </div>
             </div>
             <div className="hidden lg:flex items-center gap-1">
@@ -1046,7 +1046,7 @@ export function InvestorSection() {
                   <div className="w-10 h-10 rounded-lg bg-destructive/10 flex items-center justify-center mb-3">
                     <AlertTriangle className="h-5 w-5 text-destructive" />
                   </div>
-                  <CardTitle className="text-2xl">A Tech-Last Industry</CardTitle>
+                  <CardTitle className="text-2xl">An Outdated Industry</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <p className="text-muted-foreground leading-relaxed">
@@ -1101,7 +1101,7 @@ export function InvestorSection() {
                       <div className="text-xs text-muted-foreground">UK TAM/year</div>
                     </div>
                     <div className="text-center">
-                      <div className="text-3xl font-bold text-foreground mb-1">&lt;5%</div>
+                      <div className="text-3xl font-bold text-foreground mb-1">&lt;10%</div>
                       <div className="text-xs text-muted-foreground">Digital</div>
                     </div>
                     <div className="text-center">
@@ -1111,8 +1111,8 @@ export function InvestorSection() {
                   </div>
                   <div className="p-4 bg-accent rounded-lg border border-border">
                     <p className="text-sm text-foreground">
-                      Capturing just <strong>5% of the UK market</strong> translates to{" "}
-                      <strong className="text-primary">£75M+ in GMV</strong>
+                      Capturing just <strong>10% of the UK market</strong> translates to{" "}
+                      <strong className="text-primary">£150M+ in GMV</strong>
                     </p>
                   </div>
                   <div className="p-4 bg-accent rounded-lg border border-border">
@@ -1147,15 +1147,13 @@ export function InvestorSection() {
           <div className="max-w-6xl mx-auto px-6">
             <div className="text-center mb-20">
               <h2 className="text-5xl md:text-6xl font-bold mb-6 tracking-tight text-foreground">
-                Pipeline that practically builds itself
+                Problems We Solve     
               </h2>
-              <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed font-light">
-                Everything you need to find, engage, and win leads is right here. Ready to get started?
-              </p>
+              
             </div>
 
             <div className="mb-20">
-              <h3 className="text-3xl font-bold text-center mb-4 text-foreground">Problems We Solve</h3>
+              
 
               {/* Stakeholder tabs */}
               <div className="flex flex-wrap justify-center gap-3 mb-8">
@@ -1430,8 +1428,8 @@ export function InvestorSection() {
                     <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-3 mx-auto">
                       <Workflow className="h-6 w-6 text-primary" />
                     </div>
-                    <h4 className="font-semibold text-foreground mb-1 text-sm">Workflow Automation</h4>
-                    <p className="text-xs text-muted-foreground">Automates pricing, dispatching, notifications</p>
+                    <h4 className="font-semibold text-foreground mb-1 text-sm"> Automation</h4>
+                    <p className="text-xs text-muted-foreground">{"Auto Workflow Management"}</p>
                   </CardContent>
                 </Card>
 
@@ -1478,8 +1476,7 @@ export function InvestorSection() {
                     </div>
                     <h4 className="font-semibold text-foreground mb-2">Scalable & Modular</h4>
                     <p className="text-sm text-muted-foreground">
-                      Each component can scale independently. Add new features or integrations without disrupting
-                      existing workflows.
+                      Each component can scale independently. Add new features or integrations without disrupting existing workflows. Days not months.
                     </p>
                   </CardContent>
                 </Card>
@@ -1504,8 +1501,7 @@ export function InvestorSection() {
                     </div>
                     <h4 className="font-semibold text-foreground mb-2">Automation-Driven</h4>
                     <p className="text-sm text-muted-foreground">
-                      Reduces manual work by 80%. AI handles pricing, matching, routing, and notifications
-                      automatically.
+                      Reduces manual work by 80%. AI handles pricing, matching, routing,and notifications automatically.
                     </p>
                   </CardContent>
                 </Card>
@@ -1570,11 +1566,10 @@ export function InvestorSection() {
             <div className="text-center mb-20">
               <Badge className="mb-6 bg-tertiary/10 text-tertiary border-tertiary/20 rounded-lg">Proven Traction</Badge>
               <h2 className="text-5xl md:text-6xl font-bold mb-6 text-foreground tracking-tight">
-                Proven Market Traction, Global Reach & Scalable Growth
+                Proven Market Traction
               </h2>
               <p className="text-xl text-muted-foreground max-w-3xl mx-auto font-light">
-                Consistent year-on-year growth, global visibility, and highly efficient lead generation — achieved
-                primarily through performance.
+                Consistent year-on-year growth, global visibility and highly efficient lead generation, achieved primarily through performance.
               </p>
             </div>
 
@@ -1638,8 +1633,7 @@ export function InvestorSection() {
                   <h3 className="text-xl font-bold text-foreground">Global Reach</h3>
                 </div>
                 <p className="text-center text-muted-foreground text-sm mb-6">
-                  Windscreen Compare is already attracting users from over 30 countries — proving clear international
-                  demand and scalability beyond the UK.
+                  Windscreen Compare is already attracting users from over 30 countries, proving clear international demand and scalability beyond the UK.
                 </p>
                 <Card className="border border-border bg-gradient-to-br from-blue-50 to-primary/5 rounded-lg">
                   <CardContent className="p-4">
@@ -1754,8 +1748,7 @@ export function InvestorSection() {
                   <h3 className="text-xl font-bold text-foreground">Traffic Sources</h3>
                 </div>
                 <p className="text-center text-muted-foreground text-sm mb-6">
-                  A diversified, sustainable traffic mix — strong SEO foundation, credible referrals, and minimal paid
-                  spend.
+                  A diversified, sustainable traffic mix strong SEO foundation, credible referrals, and minimal paid spend.
                 </p>
                 {/* CHANGE: Changed from grid-cols-1 to grid-cols-2 to display cards in 2 columns */}
                 <div className="grid grid-cols-2 gap-3 my-20">
@@ -2497,24 +2490,7 @@ export function InvestorSection() {
               processing 500+ jobs with 4 national suppliers integrated
             </p>
 
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
-              <div className="p-6 bg-white rounded-lg border border-border shadow-sm">
-                <div className="text-3xl font-bold text-foreground mb-1">500+</div>
-                <div className="text-sm text-muted-foreground">Jobs Booked</div>
-              </div>
-              <div className="p-6 bg-white rounded-lg border border-border shadow-sm">
-                <div className="text-3xl font-bold text-foreground mb-1">4</div>
-                <div className="text-sm text-muted-foreground">Suppliers</div>
-              </div>
-              <div className="p-6 bg-white rounded-lg border border-border shadow-sm">
-                <div className="text-3xl font-bold text-foreground mb-1">60%</div>
-                <div className="text-sm text-muted-foreground">Conversion</div>
-              </div>
-              <div className="p-6 bg-white rounded-lg border border-border shadow-sm">
-                <div className="text-3xl font-bold text-foreground mb-1">£2M</div>
-                <div className="text-sm text-muted-foreground">Valuation</div>
-              </div>
-            </div>
+            
 
             <Card className="border border-border bg-white text-left mb-8 shadow-sm rounded-lg">
               <CardHeader>
@@ -2631,7 +2607,7 @@ export function InvestorSection() {
                   Contact
                 </a>
               </div>
-              <div className="text-sm text-white/60">© 2025 Windscreen Compare Ltd.</div>
+              <div className="text-sm text-white/60">© 2025 Windscreen Compare Limited</div>
             </div>
           </div>
         </footer>
